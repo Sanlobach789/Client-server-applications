@@ -1,23 +1,9 @@
-import logging
-import sys
+from basic_log_config import *
+import datetime
 
-# Определить формат сообщений
-format = logging.Formatter('%(asctime)s %(levelname)s %(module)s %(message)s')
+today = datetime.datetime.now().strftime('%Y-%m-%d')
+log_path = './log_journals/'
 
-# Создать обработчик, который выводит сообщения с уровнем CRITICAL в поток stderr
-crit_hand = logging.StreamHandler(sys.stderr)
-crit_hand.setLevel(logging.CRITICAL)
-crit_hand.setFormatter(format)
+log_filename = log_path + 'server_journal ' + str(today)
 
-# Создать обработчик, который выводит сообщения в файл
-applog_hand = logging.FileHandler('server_journal.log')
-applog_hand.setFormatter(format)
-
-# Создать регистратор верхнего уровня с именем 'app'
-app_log = logging.getLogger('server_journal')
-app_log.setLevel(logging.INFO)
-app_log.addHandler(applog_hand)
-app_log.addHandler(crit_hand)
-
-# Изменить уровень важности для регистратора 'server_journal.net'
-# logging.getLogger('server_journal.net').setLevel(logging.ERROR)
+get_app_file_handler(log_filename, 'server_journal')
